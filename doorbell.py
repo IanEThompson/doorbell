@@ -45,4 +45,3 @@ for i in range(0,12):
 #everything's set up. Now just wait for a button to be pressed
 #pause()
 input("Press ENTER to quit")
-quit()
