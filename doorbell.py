@@ -13,7 +13,7 @@ def playAudio(button):
     
     #choose which mp3 to play
     if button == btn[0]:
-        file = '/home/pi/Music/StarWars.mp3'
+        file = '/home/pi/Music/ImperialMarch.mp3'
     elif button == btn[1]:
         file = '/home/pi/Music/PeriodicTableSong.mp3'
     elif button == btn[2]:
@@ -27,7 +27,7 @@ def playAudio(button):
     elif button == btn[6]:
         file = '/home/pi/Music/Rawhide.mp3'
     elif button == btn[7]:
-        file = '/home/pi/Music/BennyHill.mp3'
+        file = '/home/pi/Music/YaketySax.mp3'
     elif button == btn[8]:
         file = '/home/pi/Music/DrivingInMyCar.mp3'
     else:
