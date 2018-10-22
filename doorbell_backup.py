@@ -6,15 +6,8 @@ import pygame
 from gpiozero import Button
 from signal import pause
 
-#global variable to count the instances of the playAudio function running
-playAudioCount = 0
-
-#playAudio function - called whenever a button is pressed
-#The button that is pressed will pass itself as the input parameter
+#playAudio function includes filenames of mp3 files to play
 def playAudio(button):
-    global playAudioCount
-    playAudioCount = playAudioCount + 1
-
     #stop any music already playing
     pygame.mixer.music.stop()
     
@@ -50,42 +43,29 @@ def playAudio(button):
         file = '/home/pi/Music/SummerOf69_loud.mp3'
         volume = 0.8
     else:
-        playAudioCount = playAudioCount - 1
         return None
     
     #load and play the mp3 file
     pygame.mixer.music.load(file)
     pygame.mixer.music.set_volume(volume)
     pygame.mixer.music.play()
-
-    #after 15 seconds (if no more buttons have been pressed), stop the music
-    time.sleep(15)
-    playAudioCount = playAudioCount - 1
     
-    print("playAudioCount=",playAudioCount);
-    
-    if playAudioCount == 0:
-        pygame.mixer.music.fadeout(2000)   #fadeout over 2 seconds
-
-#=======================================================
-#  Main program starts here
-#=======================================================
-
 #initialise pygame mixer
 pygame.init()
 pygame.mixer.init()
 
-#create 12 button instances from button[0] to button[11]
-btn = []    #create empty list for the button instances
-buttonPin = [2,3,4,17,27,22,13,6,5,11,9,10]  #list of GPIO pins that buttons are connected to
+#create button instances from button[0] to button[11]
+btn = []
+#buttonPin = [2,3,4,17,27,22,10,9,11,5,6,13]
+buttonPin = [2,3,4,17,27,22,13,6,5,11,9,10]
 for i in range(0,12):
-    x = Button(buttonPin[i])        #create a new button instance on the appropriate pin
-    btn.append(x)                   #add it to the list of button instances
-    btn[i].when_pressed=playAudio   #link the new button to the playAudio function
+    x = Button(buttonPin[i])
+    btn.append(x)
 
-#counter to keep track of how many instances of the playAudio function are running
-playAudioCount=0
+#assign the playAudio event for each button
+for i in range(0,12):
+    btn[i].when_pressed=playAudio
 
-#everything's set up now; the playAudio function will run whenever a button is pressed
+#everything's set up. Now just wait for a button to be pressed
+#pause()
 input("Press ENTER to quit")
-
